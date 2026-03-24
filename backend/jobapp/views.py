@@ -1,7 +1,7 @@
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.conf import settings
 from django.db.models import Count
 from django.db.models.functions import TruncDate
@@ -98,23 +98,478 @@ class PublicApplyView(generics.CreateAPIView):
         self._send_confirmation(application)
 
     def _send_confirmation(self, application):
-        subject = "We received your application"
-        body = (
+        subject = "✅ Application Received — Muji Consulting"
+
+        plain_body = (
             f"Dear {application.full_name},\n\n"
-            f"Thank you for applying for \"{application.job.title}\".\n"
-            f"We will review your application and be in touch.\n\n"
-            f"Best regards,\nThe Recruitment Team"
+            f"Thank you for applying for the position of \"{application.job.title}\".\n"
+            f"We have successfully received your application and CV.\n\n"
+            f"Our recruitment team will review your submission and contact you if your profile matches our requirements.\n\n"
+            f"Best regards,\nThe Muji Consulting Team"
         )
+
+        html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Application Received</title>
+</head>
+<body style="margin:0;padding:0;background:#0d1117;font-family:'Segoe UI',Arial,sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0"
+         style="background:#0d1117;padding:40px 16px;">
+        </tr>
+      <td align="center">
+        <table width="100%" cellpadding="0" cellspacing="0"
+               style="max-width:560px;
+                      background:linear-gradient(160deg,#0f1923 0%,#162030 60%,#0f1923 100%);
+                      border-radius:20px;overflow:hidden;
+                      border:1px solid rgba(255,255,255,0.07);
+                      box-shadow:0 24px 60px rgba(0,0,0,0.5);">
+
+          <!-- Top shimmer bar -->
+          <tr>
+            <td style="height:4px;
+                       background:linear-gradient(90deg,#1B3D2F,#3DBE5C,#3498db,#C9A53A);">
+            </td>
+          </tr>
+
+          <!-- Brand row -->
+          <tr>
+            <td style="padding:32px 36px 0;">
+              <div style="display:inline-block;
+                          background:linear-gradient(135deg,#1B3D2F,#3498db);
+                          border-radius:10px;padding:8px 18px;">
+                <span style="color:#ffffff;font-size:0.75rem;font-weight:700;
+                              letter-spacing:1.5px;text-transform:uppercase;">
+                  MUJI CONSULTING
+                </span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Hero text -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <p style="margin:0 0 10px;font-size:0.68rem;font-weight:700;
+                         letter-spacing:1.8px;text-transform:uppercase;color:#3DBE5C;">
+                ● Application Received
+              </p>
+              <h1 style="margin:0;font-size:1.35rem;font-weight:700;
+                          color:#ffffff;line-height:1.3;">
+                Thanks {application.full_name},<br/>we’ve got your CV!
+              </h1>
+              <p style="margin:14px 0 0;font-size:0.85rem;
+                         color:rgba(255,255,255,0.5);line-height:1.7;">
+                Your application for <strong style="color:#ffffff;">{application.job.title}</strong>
+                has been received. Our recruitment team will review it and
+                reach out if your profile matches our needs.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding:26px 36px 0;">
+              <div style="height:1px;background:rgba(255,255,255,0.07);"></div>
+            </td>
+          </tr>
+
+          <!-- What happens next -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <p style="margin:0 0 18px;font-size:0.68rem;font-weight:700;
+                         letter-spacing:1.2px;text-transform:uppercase;
+                         color:rgba(255,255,255,0.3);">
+                What Happens Next
+              </p>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:14px;">
+                <tr>
+                  <td style="width:36px;vertical-align:top;padding-top:1px;">
+                    <div style="width:32px;height:32px;border-radius:50%;
+                                background:linear-gradient(135deg,#1B3D2F,#3DBE5C);
+                                text-align:center;line-height:32px;
+                                font-size:0.75rem;font-weight:700;color:#fff;">
+                      1
+                    </div>
+                  </td>
+                  <td style="padding-left:14px;vertical-align:middle;">
+                    <p style="margin:0;font-size:0.82rem;
+                               color:rgba(255,255,255,0.55);line-height:1.5;">
+                      Our HR team reviews your CV and application.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:14px;">
+                <tr>
+                  <td style="width:36px;vertical-align:top;padding-top:1px;">
+                    <div style="width:32px;height:32px;border-radius:50%;
+                                background:linear-gradient(135deg,#163a5e,#3498db);
+                                text-align:center;line-height:32px;
+                                font-size:0.75rem;font-weight:700;color:#fff;">
+                      2
+                    </div>
+                  </td>
+                  <td style="padding-left:14px;vertical-align:middle;">
+                    <p style="margin:0;font-size:0.82rem;
+                               color:rgba(255,255,255,0.55);line-height:1.5;">
+                      Shortlisted candidates are contacted for an interview.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                  <td style="width:36px;vertical-align:top;padding-top:1px;">
+                    <div style="width:32px;height:32px;border-radius:50%;
+                                background:linear-gradient(135deg,#5a3a1a,#C9A53A);
+                                text-align:center;line-height:32px;
+                                font-size:0.75rem;font-weight:700;color:#fff;">
+                      3
+                    </div>
+                  </td>
+                  <td style="padding-left:14px;vertical-align:middle;">
+                    <p style="margin:0;font-size:0.82rem;
+                               color:rgba(255,255,255,0.55);line-height:1.5;">
+                      We’ll keep your details for future opportunities
+                      if not immediately selected.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <div style="height:1px;background:rgba(255,255,255,0.07);"></div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 36px 32px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                    <p style="margin:0;font-size:0.72rem;color:rgba(255,255,255,0.22);">
+                      🔒 Your personal data is handled with confidentiality.
+                    </p>
+                  </td>
+                  <td align="right">
+                    <p style="margin:0;font-size:0.72rem;color:rgba(255,255,255,0.18);">
+                      Muji Consulting &copy; 2025
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>"""
+
         try:
-            send_mail(subject, body, settings.DEFAULT_FROM_EMAIL,
-                      [application.email], fail_silently=True)
-        except Exception:
-            pass
+            msg = EmailMultiAlternatives(
+                subject=subject,
+                body=plain_body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[application.email],
+            )
+            msg.attach_alternative(html_body, "text/html")
+            msg.send(fail_silently=False)
+        except Exception as e:
+            # Log the error but don't raise – we don't want to block application creation
+            print(f"[ApplicationConfirmation] Failed to send email to {application.email}: {e}")
 
 
 class PublicContactView(generics.CreateAPIView):
     serializer_class   = PublicContactSerializer
     permission_classes = [permissions.AllowAny]
+
+    def perform_create(self, serializer):
+        contact = serializer.save()
+        self._send_confirmation(contact)
+
+    def _send_confirmation(self, contact):
+
+        # ══════════════════════════════════════════════════════════════════════
+        # EMAIL 1 — Confirmation to the visitor (e.g. johndoe@gmail.com)
+        # ══════════════════════════════════════════════════════════════════════
+
+        confirmation_subject = "✅ We received your message — Muji Consulting"
+
+        plain_body = (
+            f"Hi {contact.name},\n\n"
+            f"Thank you for reaching out to Muji Consulting.\n"
+            f"We've received your message and will get back to you within 24 hours.\n\n"
+            f"Your message:\n\"{contact.message}\"\n\n"
+            f"Best regards,\nThe Muji Consulting Team"
+        )
+
+        html_body = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Message Received</title>
+</head>
+<body style="margin:0;padding:0;background:#0d1117;font-family:'Segoe UI',Arial,sans-serif;">
+
+  <table width="100%" cellpadding="0" cellspacing="0"
+         style="background:#0d1117;padding:40px 16px;">
+      <tr>
+      <td align="center">
+
+        <table width="100%" cellpadding="0" cellspacing="0"
+               style="max-width:560px;
+                      background:linear-gradient(160deg,#0f1923 0%,#162030 60%,#0f1923 100%);
+                      border-radius:20px;overflow:hidden;
+                      border:1px solid rgba(255,255,255,0.07);
+                      box-shadow:0 24px 60px rgba(0,0,0,0.5);">
+
+          <!-- Top shimmer bar -->
+          <tr>
+            <td style="height:4px;
+                       background:linear-gradient(90deg,#1B3D2F,#3DBE5C,#3498db,#C9A53A);">
+            </td>
+          </tr>
+
+          <!-- Brand row -->
+          <tr>
+            <td style="padding:32px 36px 0;">
+              <div style="display:inline-block;
+                          background:linear-gradient(135deg,#1B3D2F,#3498db);
+                          border-radius:10px;padding:8px 18px;">
+                <span style="color:#ffffff;font-size:0.75rem;font-weight:700;
+                              letter-spacing:1.5px;text-transform:uppercase;">
+                  MUJI CONSULTING
+                </span>
+              </div>
+            </td>
+          </tr>
+
+          <!-- Hero text -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <p style="margin:0 0 10px;font-size:0.68rem;font-weight:700;
+                         letter-spacing:1.8px;text-transform:uppercase;color:#3DBE5C;">
+                ● Message Received
+              </p>
+              <h1 style="margin:0;font-size:1.35rem;font-weight:700;
+                          color:#ffffff;line-height:1.3;">
+                Hi {contact.name}, we got<br/>your message!
+              </h1>
+              <p style="margin:14px 0 0;font-size:0.85rem;
+                         color:rgba(255,255,255,0.5);line-height:1.7;">
+                Thank you for reaching out. Our team will review your
+                enquiry and respond within
+                <strong style="color:rgba(255,255,255,0.8);">24 hours</strong>.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding:26px 36px 0;">
+              <div style="height:1px;background:rgba(255,255,255,0.07);"></div>
+            </td>
+          </tr>
+
+          <!-- Message preview -->
+          <tr>
+            <td style="padding:24px 36px 0;">
+              <p style="margin:0 0 10px;font-size:0.68rem;font-weight:700;
+                         letter-spacing:1.2px;text-transform:uppercase;
+                         color:rgba(255,255,255,0.3);">
+                Your Message
+              </p>
+              <table width="100%" cellpadding="0" cellspacing="0"
+                     style="background:rgba(255,255,255,0.05);
+                            border-radius:12px;
+                            border:1px solid rgba(255,255,255,0.08);">
+                  <tr>
+                  <td style="padding:18px 22px;">
+                    <table cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td style="width:3px;background:linear-gradient(180deg,#3DBE5C,#3498db);
+                                   border-radius:3px;vertical-align:top;">
+                        </td>
+                        <td style="padding-left:14px;">
+                          <p style="margin:0;font-size:0.85rem;
+                                     color:rgba(255,255,255,0.6);
+                                     line-height:1.7;font-style:italic;">
+                            &ldquo;{contact.message}&rdquo;
+                          </p>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  </tr>
+                </table>
+            </td>
+          </tr>
+
+          <!-- What happens next -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <p style="margin:0 0 18px;font-size:0.68rem;font-weight:700;
+                         letter-spacing:1.2px;text-transform:uppercase;
+                         color:rgba(255,255,255,0.3);">
+                What Happens Next
+              </p>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:14px;">
+                  <tr>
+                  <td style="width:36px;vertical-align:top;padding-top:1px;">
+                    <div style="width:32px;height:32px;border-radius:50%;
+                                background:linear-gradient(135deg,#1B3D2F,#3DBE5C);
+                                text-align:center;line-height:32px;
+                                font-size:0.75rem;font-weight:700;color:#fff;">
+                      1
+                    </div>
+                  </td>
+                  <td style="padding-left:14px;vertical-align:middle;">
+                    <p style="margin:0;font-size:0.82rem;
+                               color:rgba(255,255,255,0.55);line-height:1.5;">
+                      Our team reviews your message carefully.
+                    </p>
+                  </td>
+                  </tr>
+                </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%" style="margin-bottom:14px;">
+                  <tr>
+                  <td style="width:36px;vertical-align:top;padding-top:1px;">
+                    <div style="width:32px;height:32px;border-radius:50%;
+                                background:linear-gradient(135deg,#163a5e,#3498db);
+                                text-align:center;line-height:32px;
+                                font-size:0.75rem;font-weight:700;color:#fff;">
+                      2
+                    </div>
+                  </td>
+                  <td style="padding-left:14px;vertical-align:middle;">
+                    <p style="margin:0;font-size:0.82rem;
+                               color:rgba(255,255,255,0.55);line-height:1.5;">
+                      A consultant is assigned to your enquiry.
+                    </p>
+                  </td>
+                  </tr>
+                </table>
+
+              <table cellpadding="0" cellspacing="0" width="100%">
+                  <tr>
+                  <td style="width:36px;vertical-align:top;padding-top:1px;">
+                    <div style="width:32px;height:32px;border-radius:50%;
+                                background:linear-gradient(135deg,#5a3a1a,#C9A53A);
+                                text-align:center;line-height:32px;
+                                font-size:0.75rem;font-weight:700;color:#fff;">
+                      3
+                    </div>
+                  </td>
+                  <td style="padding-left:14px;vertical-align:middle;">
+                    <p style="margin:0;font-size:0.82rem;
+                               color:rgba(255,255,255,0.55);line-height:1.5;">
+                      We reply to
+                      <strong style="color:rgba(255,255,255,0.8);">
+                        {contact.email}
+                      </strong>
+                      within 24 hours.
+                    </p>
+                  </td>
+                  </tr>
+                </table>
+            </td>
+          </tr>
+
+          <!-- Divider -->
+          <tr>
+            <td style="padding:28px 36px 0;">
+              <div style="height:1px;background:rgba(255,255,255,0.07);"></div>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:20px 36px 32px;">
+              <table width="100%" cellpadding="0" cellspacing="0">
+                  <tr>
+                    <td>
+                    <p style="margin:0;font-size:0.72rem;color:rgba(255,255,255,0.22);">
+                      🔒 Your information is safe and will never be shared.
+                    </p>
+                    </td>
+                  <td align="right">
+                    <p style="margin:0;font-size:0.72rem;color:rgba(255,255,255,0.18);">
+                      Muji Consulting &copy; 2025
+                    </p>
+                  </td>
+                  </tr>
+                </table>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>"""
+
+        try:
+            # Send confirmation to the visitor
+            msg = EmailMultiAlternatives(
+                subject=confirmation_subject,
+                body=plain_body,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=[contact.email],
+            )
+            msg.attach_alternative(html_body, "text/html")
+            msg.send(fail_silently=False)
+
+        except Exception as e:
+            raise Exception(f"Email delivery failed: {e}")
+
+        # ══════════════════════════════════════════════════════════════════════
+        # EMAIL 2 — Alert to you (mfundoknox@gmail.com)
+        # ══════════════════════════════════════════════════════════════════════
+
+        try:
+            from django.core.mail import EmailMessage
+
+            owner_msg = EmailMessage(
+                subject=f"📬 New website message from {contact.name}",
+                body=(
+                    f"You have a new contact message from the Muji Consulting website.\n\n"
+                    f"──────────────────────────\n"
+                    f"Name:    {contact.name}\n"
+                    f"Email:   {contact.email}\n"
+                    f"──────────────────────────\n\n"
+                    f"Message:\n{contact.message}\n\n"
+                    f"──────────────────────────\n"
+                    f"Hit Reply to respond directly to {contact.name}."
+                ),
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                to=['mfundoknox@gmail.com'],
+                reply_to=[contact.email],   # ← this is how you set Reply-To properly
+            )
+            owner_msg.send(fail_silently=False)
+
+        except Exception as e:
+            print(f"[ContactAlert] Owner notification failed: {e}")
 
 
 # ── Analytics tracking (public, fire-and-forget) ──────────────────────────────
@@ -123,7 +578,6 @@ class TrackVisitView(APIView):
     """
     POST /api/track/visit/
     Body: { "page": "home" | "careers" }
-    Call this on mount of your public Home and Careers pages.
     """
     permission_classes = [permissions.AllowAny]
 
@@ -138,7 +592,6 @@ class TrackVisitView(APIView):
 class TrackJobViewView(APIView):
     """
     POST /api/track/job-view/<job_id>/
-    Call this on mount of your public Job Detail page.
     """
     permission_classes = [permissions.AllowAny]
 
@@ -155,7 +608,7 @@ class IsAdminOrStaff(permissions.BasePermission):
         return bool(request.user and request.user.is_authenticated and request.user.is_staff)
 
 
-# ── Admin views (JWT IsAuthenticated) ─────────────────────────────────────────
+# ── Admin views (JWT required) ─────────────────────────────────────────────────
 
 class AdminJobListCreateView(generics.ListCreateAPIView):
     serializer_class   = AdminJobSerializer
@@ -224,8 +677,7 @@ class AdminDashboardStatsView(APIView):
     permission_classes = [IsAdminOrStaff]
 
     def get(self, request):
-        today   = timezone.now().date()
-        # Date range: last 7 days (including today)
+        today    = timezone.now().date()
         week_ago = today - datetime.timedelta(days=6)
         date_range = [week_ago + datetime.timedelta(days=i) for i in range(7)]
         date_strs  = [d.strftime('%Y-%m-%d') for d in date_range]
@@ -239,7 +691,7 @@ class AdminDashboardStatsView(APIView):
             .annotate(count=Count('id'))
             .order_by('day')
         )
-        visit_map = {}  # {date_str: {home: n, careers: n}}
+        visit_map = {}
         for row in visit_qs:
             d = row['day'].strftime('%Y-%m-%d')
             visit_map.setdefault(d, {'home': 0, 'careers': 0})
@@ -312,10 +764,10 @@ class AdminDashboardStatsView(APIView):
             'total_job_views':       JobView.objects.count(),
 
             # Chart data
-            'visits_chart':          visits_chart,       # line chart
-            'job_views_chart':       job_views_chart,    # bar chart
-            'applications_by_status': app_by_status,    # pie chart
-            'top_jobs_by_views':     top_jobs,           # horizontal bar
-            'messages_pie':          messages_pie,       # pie chart
-            'applications_pie':      apps_pie,           # pie chart
+            'visits_chart':           visits_chart,
+            'job_views_chart':        job_views_chart,
+            'applications_by_status': app_by_status,
+            'top_jobs_by_views':      top_jobs,
+            'messages_pie':           messages_pie,
+            'applications_pie':       apps_pie,
         })

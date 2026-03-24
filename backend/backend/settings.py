@@ -82,19 +82,13 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # ── CORS ──────────────────────────────────────────────────────────────────────
-# We use JWT (Bearer token in Authorization header), so we don't need
-# credentials/cookies at all. CORS_ALLOW_ALL_ORIGINS is safe here because
-# auth is handled by the token, not by cookies.
-CORS_ALLOW_ALL_ORIGINS = True   # fine for dev; restrict in production
+CORS_ALLOW_ALL_ORIGINS = True   # fine for dev; restrict to your domain in production
 
 # ── REST Framework ────────────────────────────────────────────────────────────
 REST_FRAMEWORK = {
-    # Default: unauthenticated users can access public endpoints.
-    # Admin endpoints use IsAdminOrStaff permission which checks JWT.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    # JWT only – no sessions, no cookies, no CSRF on the API.
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
@@ -107,12 +101,18 @@ REST_FRAMEWORK = {
 
 # ── Simple JWT ────────────────────────────────────────────────────────────────
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(hours=8),   # stays logged in for a work day
+    'ACCESS_TOKEN_LIFETIME':  timedelta(hours=8),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-    'ROTATE_REFRESH_TOKENS': False,
-    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ROTATE_REFRESH_TOKENS':  False,
+    'AUTH_HEADER_TYPES':      ('Bearer',),
 }
 
-# ── Email ─────────────────────────────────────────────────────────────────────
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'recruitment@yourdomain.com'
+# ── Email (Gmail SMTP) ────────────────────────────────────────────────────────
+EMAIL_BACKEND       = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST          = 'smtp.gmail.com'
+EMAIL_PORT          = 587
+EMAIL_USE_TLS       = True
+EMAIL_HOST_USER     = 'mfundoknox@gmail.com'
+EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns' 
+SERVER_EMAIL        = 'mfundoknox@gmail.com'
+DEFAULT_FROM_EMAIL  = 'Muji Consalting <mfundoknox@gmail.com>'
