@@ -7,7 +7,11 @@ SECRET_KEY = 'django-insecure-lb2^^qn+s_uiv!@=j-^d@*0y#x1a$5)a2=@v-k@y9f)jck005v
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    'localhost',
+    '127.0.0.1',
+    'mujiconsulting.co.za',
+]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -56,8 +60,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'munjidb',
+        'USER': 'munji_user',
+        'PASSWORD': 'Mfundo@1995',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -73,7 +81,7 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/django-static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
@@ -81,8 +89,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ── CORS ──────────────────────────────────────────────────────────────────────
-CORS_ALLOW_ALL_ORIGINS = True   # fine for dev; restrict to your domain in production
+
+
+# ── CORS ─
+CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOWED_ORIGINS = [
+    "https://mujiconsulting.co.za",
+    "http://localhost:3000",
+]
 
 # ── REST Framework ────────────────────────────────────────────────────────────
 REST_FRAMEWORK = {

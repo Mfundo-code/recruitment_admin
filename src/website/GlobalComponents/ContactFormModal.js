@@ -29,7 +29,7 @@ const ContactFormModal = ({ isOpen, onClose, inline = false }) => {
 
   const API_URL = process.env.NODE_ENV === 'development'
     ? 'http://127.0.0.1:8000/api/contact/'
-    : 'https://www.zwiko.co.za/api/contact/';
+    : 'https://www.mujiconsulting.co.za/api/contact/';
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

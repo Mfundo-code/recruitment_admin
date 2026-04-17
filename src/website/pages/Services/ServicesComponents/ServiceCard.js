@@ -48,12 +48,6 @@ const ServiceCard = () => {
         'No two businesses are alike. Our services are fully adaptable to your specific requirements, industry context, and hiring objectives. Whether you need volume recruitment, niche specialist hiring, or strategic workforce planning, we tailor our approach to deliver the most effective strategy for your unique situation.',
       image: 'https://api.iconify.design/mdi:puzzle.svg?color=%231B3D2F',
     },
-    {
-      title: 'Industry Specialization',
-      description:
-        'We focus exclusively on Engineering, Construction, Mining, FMCG (Fast-Moving Consumer Goods), Architecture, Supply Chain, and Logistics. Our deep sector expertise means we understand the technical competencies, safety requirements, regulatory frameworks, and market dynamics unique to your field.',
-      image: 'https://api.iconify.design/mdi:factory.svg?color=%231B3D2F',
-    },
   ];
 
   const styles = {

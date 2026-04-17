@@ -8,7 +8,7 @@ import TestimonialsSection from "./HomeComponents/TestimonialsSection";
 
 const BASE = process.env.NODE_ENV === 'development'
   ? 'http://127.0.0.1:8000'
-  : 'https://www.dlamsoft.co.za';
+  : 'https://www.mujiconsulting.co.za';
 
 const Home = () => {
   useEffect(() => {

@@ -1,7 +1,4 @@
-
-
-
-// src/GlobalComponents/Header.js
+// src/website/GlobalComponents/Header.js
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaBars, FaTimes, FaPhone } from "react-icons/fa";
@@ -49,12 +46,13 @@ const Header = () => {
           />
         </div>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Navigation Links – Projects removed */}
         {!isMobile && (
           <div style={styles.navLinks}>
             <Link to="/" style={styles.navLink}>Home</Link>
+            <Link to="/about" style={styles.navLink}>About</Link>
+            <Link to="/careers" style={styles.navLink}>Careers</Link>
             <Link to="/services" style={styles.navLink}>Services</Link>
-            <Link to="/track" style={styles.navLink}>Track Order</Link>
           </div>
         )}
 
@@ -85,7 +83,7 @@ const Header = () => {
         )}
       </nav>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu Drawer – Projects removed */}
       {mobileMenuOpen && isMobile && (
         <div style={styles.mobileOverlay} onClick={toggleMobileMenu}>
           <div style={styles.mobileMenu} onClick={(e) => e.stopPropagation()}>
@@ -94,8 +92,9 @@ const Header = () => {
             </button>
             <div style={styles.mobileLinks}>
               <Link to="/" style={styles.mobileLink} onClick={toggleMobileMenu}>Home</Link>
+              <Link to="/about" style={styles.mobileLink} onClick={toggleMobileMenu}>About</Link>
+              <Link to="/careers" style={styles.mobileLink} onClick={toggleMobileMenu}>Careers</Link>
               <Link to="/services" style={styles.mobileLink} onClick={toggleMobileMenu}>Services</Link>
-              <Link to="/track" style={styles.mobileLink} onClick={toggleMobileMenu}>Track Order</Link>
               <Link to="/contact" style={styles.mobileContactLink} onClick={toggleMobileMenu}>Contact</Link>
             </div>
           </div>
@@ -168,7 +167,7 @@ const styles = {
     width: "100%",
   },
 
-  /* ── Nav – mobile (tighter padding) ── */
+  /* ── Nav – mobile ── */
   navMobile: {
     display: "flex",
     justifyContent: "space-between",
@@ -191,7 +190,7 @@ const styles = {
     objectFit: "contain",
   },
   logoImageMobile: {
-    height: "44px",          // smaller on mobile
+    height: "44px",
     width: "auto",
     maxWidth: "160px",
     objectFit: "contain",
@@ -259,7 +258,7 @@ const styles = {
     justifyContent: "flex-end",
   },
   mobileMenu: {
-    width: "240px",           // slightly narrower drawer
+    width: "240px",
     height: "100%",
     backgroundColor: "#1E2A3A",
     padding: "20px",

@@ -79,7 +79,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 3: Company */}
+          {/* Column 3: Company (remaining links only) */}
           <div className="footer-column" style={styles.column}>
             <h4 style={styles.columnTitle}>Company</h4>
             <ul style={styles.linkList}>
@@ -89,40 +89,8 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="footer-link" style={styles.link}>
-                  Blog
-                </Link>
-              </li>
-              <li>
-                <Link to="/clients" className="footer-link" style={styles.link}>
-                  Clients
-                </Link>
-              </li>
-              <li>
                 <Link to="/careers" className="footer-link" style={styles.link}>
                   Careers
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Column 4: Support */}
-          <div className="footer-column" style={styles.column}>
-            <h4 style={styles.columnTitle}>Support</h4>
-            <ul style={styles.linkList}>
-              <li>
-                <Link to="/faq" className="footer-link" style={styles.link}>
-                  FAQ
-                </Link>
-              </li>
-              <li>
-                <Link to="/privacy" className="footer-link" style={styles.link}>
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link to="/terms" className="footer-link" style={styles.link}>
-                  Terms of Service
                 </Link>
               </li>
               <li>
@@ -130,7 +98,6 @@ const Footer = () => {
                   Contact Us
                 </Link>
               </li>
-              {/* ✅ SIGN IN BUTTON added here */}
               <li>
                 <Link to="/admin/login" className="footer-link" style={styles.link}>
                   🔐 Sign In
@@ -139,7 +106,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Column 5: Contact */}
+          {/* Column 4: Contact */}
           <div className="footer-column" style={styles.column}>
             <h4 style={styles.columnTitle}>Contact</h4>
             <address style={styles.contactInfo}>
@@ -209,7 +176,7 @@ const styles = {
   },
   mainContent: {
     display: "grid",
-    gridTemplateColumns: "repeat(5, 1fr)",
+    gridTemplateColumns: "repeat(4, 1fr)",
     gap: "2rem",
     marginBottom: "2rem",
   },

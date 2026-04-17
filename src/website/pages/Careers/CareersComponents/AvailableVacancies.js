@@ -40,7 +40,7 @@ const AvailableVacancies = ({ initialJobs = [] }) => {
 
   const BASE = process.env.NODE_ENV === 'development'
     ? 'http://127.0.0.1:8000'
-    : 'https://www.dlamsoft.co.za';
+    : 'https://www.mujiconsulting.co.za';
 
   const API_JOBS  = `${BASE}/api/jobs/`;
   const API_APPLY = `${BASE}/api/apply/`;
