@@ -5,12 +5,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'django-insecure-lb2^^qn+s_uiv!@=j-^d@*0y#x1a$5)a2=@v-k@y9f)jck005v'
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
     'mujiconsulting.co.za',
+    'www.mujiconsulting.co.za',
 ]
 
 INSTALLED_APPS = [
@@ -89,12 +90,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-
-# ── CORS ─
+# ── CORS ──────────────────────────────────────────────────────────────────────
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOWED_ORIGINS = [
     "https://mujiconsulting.co.za",
+    "https://www.mujiconsulting.co.za",
     "http://localhost:3000",
 ]
 
@@ -127,6 +127,6 @@ EMAIL_HOST          = 'smtp.gmail.com'
 EMAIL_PORT          = 587
 EMAIL_USE_TLS       = True
 EMAIL_HOST_USER     = 'mfundoknox@gmail.com'
-EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns' 
+EMAIL_HOST_PASSWORD = 'wqsdayocqqyofrns'
 SERVER_EMAIL        = 'mfundoknox@gmail.com'
 DEFAULT_FROM_EMAIL  = 'Muji Consalting <mfundoknox@gmail.com>'
