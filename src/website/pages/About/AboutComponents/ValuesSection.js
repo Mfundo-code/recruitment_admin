@@ -27,7 +27,7 @@ const ValuesSection = () => {
     {
       title: "Focus on Long-term Relationships",
       description:
-        "We're not in the business of simply filling positions — we're building partnerships. By deeply understanding unique needs, aspirations, and challenges, we create lasting relationships that drive mutual success far beyond individual placements.",
+        "We're not in the business of simply filling positions, we're building partnerships. By deeply understanding unique needs, aspirations, and challenges, we create lasting relationships that drive mutual success far beyond individual placements.",
       icon: "https://api.iconify.design/mdi:hand-heart.svg?color=%23C9A53A", // gold
     },
   ];

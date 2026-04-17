@@ -17,14 +17,14 @@ const AboutHero = () => {
       <div style={styles.container}>
         <span style={styles.preHeadline}>Who We Are</span>
         <h1 style={styles.headline}>
-          Aligning the Right <span style={styles.accent}>Talent</span> with The{" "}
-          <span style={styles.accent}>Right Opportunities</span>
+          Muji Consulting {" "}
+          <span style={styles.accent}>People First,</span>{" "}
+          <span style={styles.accent}>Purpose Driven</span>
         </h1>
         <p style={styles.subheadline}>
-          With deep expertise in Engineering, Construction, Mining, FMCG,
-          Architecture, Supply Chain, and Logistics, we go beyond matching
-          resumes to job descriptions — we build lasting partnerships that
-          drive long-term success.
+          We are a South African talent solutions partner dedicated to
+          connecting exceptional professionals with the opportunities they
+          deserve. Rooted in integrity and driven by meaningful relationships.
         </p>
       </div>
       <div style={styles.bottomAccent}></div>

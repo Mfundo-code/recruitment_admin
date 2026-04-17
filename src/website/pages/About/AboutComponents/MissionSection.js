@@ -21,7 +21,7 @@ const MissionSection = () => {
           </h2>
           <p className="mission-paragraph">
             Our mission is clear: to align the right talent with the right
-            opportunities. We go beyond matching resumes to job descriptions —
+            opportunities. We go beyond matching resumes to job descriptions,
             we focus on finding candidates who possess not only the required
             skills but also the cultural fit that drives long‑term success. With
             deep expertise in Engineering, Construction, Mining, FMCG,

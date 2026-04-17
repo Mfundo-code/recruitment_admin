@@ -124,18 +124,15 @@
     <link rel="icon"             href="%PUBLIC_URL%/favicon-32x32.png" sizes="32x32" type="image/png" />
     <link rel="icon"             href="%PUBLIC_URL%/favicon-16x16.png" sizes="16x16" type="image/png" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link rel="manifest"         href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- manifest removed — prevents browser PWA install prompt -->
 
     <!-- ═══════════════════════════════════════════
          PERFORMANCE – Preconnect & DNS Prefetch
     ═══════════════════════════════════════════ -->
-    <!-- API origin -->
     <link rel="preconnect" href="https://www.mujiconsulting.co.za" crossorigin />
-    <!-- Google Fonts (if used in future) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Analytics (replace with your provider) -->
-    <!-- <link rel="preconnect" href="https://www.google-analytics.com" /> -->
 
     <!-- ═══════════════════════════════════════════
          GEO & REGIONAL
@@ -146,7 +143,7 @@
     <meta http-equiv="content-language" content="en-ZA" />
 
     <!-- ═══════════════════════════════════════════
-         SECURITY HEADERS (supplement server-side headers)
+         SECURITY HEADERS
     ═══════════════════════════════════════════ -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options"        content="SAMEORIGIN" />
@@ -166,18 +163,6 @@
     <noscript>
       You need to enable JavaScript to use the Munji Consulting recruitment platform.
     </noscript>
-
-    <!--
-      ACCESSIBILITY: Skip-to-content link injected by the React app.
-      If your Header component doesn't already include one, add:
-        <a href="#main-content" class="skip-link">Skip to main content</a>
-      at the top of your Header component.
-    -->
     <div id="root"></div>
-
-    <!--
-      Build step automatically injects bundled JS here.
-      Run `npm run build` or `yarn build` to generate the production bundle.
-    -->
   </body>
 </html>

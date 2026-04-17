@@ -40,7 +40,7 @@ const services = [
     title: "Background Verification",
     description:
       "Comprehensive validation of credentials, employment history, educational qualifications, and references. Rigorous checks that protect your organisation.",
-    bullets: ["Employment & education verification", "Reference & identity checks", "Legally compliant screening"],
+    bullets: ["Employment & education verification", "Reference checks", "Identity checks"],
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const services = [
     tag: "Tailored Solutions",
     title: "Customizable Solutions",
     description:
-      "No two businesses are alike. We adapt our approach to your industry, volume needs, and strategic objectives—from volume recruitment to niche specialist hiring.",
+      "No two businesses are alike. We adapt our approach to your industry, volume needs, and strategic objectives from volume recruitment to niche specialist hiring.",
     bullets: ["Industry‑specific strategies", "Scalable workforce planning", "Flexible engagement models"],
   },
 ];
