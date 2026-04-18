@@ -30,7 +30,7 @@ const Footer = () => {
             </p>
             <div style={styles.socialIcons}>
               <a
-                href="https://www.linkedin.com/company/muji-consulting"
+                href="https://www.linkedin.com/company/113165310"  // Updated LinkedIn link
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-social-icon"
