@@ -181,7 +181,7 @@ export default function JobTemplateGenerator() {
                 titleFontScale so the text always stays on one line. */}
             <div
               style={{
-                height: fs(200),
+                height: fs(150),
                 display: 'flex',
                 alignItems: 'center',
               }}
