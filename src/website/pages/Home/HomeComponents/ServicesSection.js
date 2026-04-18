@@ -74,13 +74,6 @@ const ServicesSection = () => {
           100% { transform: translateY(0)     scale(1);    opacity: 1; }
         }
         .heading-animate { animation: popGreen 900ms cubic-bezier(.2,.9,.25,1) both; }
-        .open-pos-btn:hover {
-          background: ${GOLD} !important;
-          color: ${DARK_GREEN} !important;
-          border-color: ${GOLD} !important;
-          transform: translateY(-1px);
-          box-shadow: 0 6px 18px rgba(201,165,58,0.35) !important;
-        }
         @media (max-width: 980px) { .services-grid { grid-template-columns: repeat(2, 1fr) !important; } }
         @media (max-width: 620px) { .services-grid { grid-template-columns: 1fr !important; } }
       `}</style>
@@ -142,34 +135,6 @@ const ServicesSection = () => {
                         </li>
                       ))}
                     </ul>
-
-                    {/* ── Open Positions button ── */}
-                    <button
-                      className="open-pos-btn"
-                      onClick={() => navigate("/careers")}
-                      aria-label={`View open positions for ${service.title}`}
-                      style={{
-                        ...styles.openPosBtn,
-                        borderColor: isHovered ? GOLD : DARK_GREEN,
-                        color: isHovered ? GOLD : DARK_GREEN,
-                      }}
-                    >
-                      <svg
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        style={{ flexShrink: 0 }}
-                      >
-                        <rect x="2" y="7" width="20" height="14" rx="2" />
-                        <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-                        <line x1="12" y1="12" x2="12" y2="16" />
-                        <line x1="10" y1="14" x2="14" y2="14" />
-                      </svg>
-                      View Open Positions
-                    </button>
                   </div>
                 </div>
               </article>
@@ -262,21 +227,6 @@ const styles = {
   bullets:   { listStyle: "none", padding: 0, margin: "12px 0 0", display: "grid", gap: 8 },
   bulletItem:{ display: "flex", alignItems: "center", gap: 10, fontSize: 13 },
   bulletDot: { width: 6, height: 6, borderRadius: 6, flexShrink: 0 },
-  openPosBtn: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
-    marginTop: 14,
-    background: "transparent",
-    border: "1.5px solid",
-    borderRadius: 8,
-    padding: "8px 14px",
-    fontSize: 13,
-    fontWeight: 700,
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-    letterSpacing: "0.2px",
-  },
   bottomStrip: {
     marginTop: 28,
     padding: "20px",

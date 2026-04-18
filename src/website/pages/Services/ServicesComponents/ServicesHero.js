@@ -21,8 +21,7 @@ const ServicesHero = () => {
           <span className="hero-accent">Tailored to Your Growth</span>
         </h1>
         <p className="hero-subheadline">
-          Specializing in Engineering, Construction, Mining, FMCG, Architecture,
-          Supply Chain, and Logistics — we deliver Executive Search, Temporary
+          We deliver Executive Search, Temporary
           Staffing, Permanent Placement, and Background Verification. Our
           end‑to‑end solutions are designed to align the right talent with your
           unique opportunities.

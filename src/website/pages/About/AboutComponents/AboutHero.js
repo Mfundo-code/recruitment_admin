@@ -17,7 +17,7 @@ const AboutHero = () => {
       <div style={styles.container}>
         <span style={styles.preHeadline}>Who We Are</span>
         <h1 style={styles.headline}>
-          Muji Consulting {" "}
+          Muji Consulting Services {" "}
           <span style={styles.accent}>People First,</span>{" "}
           <span style={styles.accent}>Purpose Driven</span>
         </h1>

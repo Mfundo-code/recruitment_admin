@@ -5,13 +5,13 @@ import { getJob } from './api';
 import { MdLocationOn } from 'react-icons/md';
 
 export default function JobTemplateGenerator() {
-  const { id }                = useParams();
-  const [job, setJob]         = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [imgSize, setImgSize] = useState({ width: 0, height: 0 });
-  const [titleLong, setTitleLong] = useState(false);
-  const templateRef           = useRef();
-  const measureRef            = useRef();
+  const { id }                    = useParams();
+  const [job, setJob]             = useState(null);
+  const [loading, setLoading]     = useState(true);
+  const [imgSize, setImgSize]     = useState({ width: 0, height: 0 });
+  const [titleFontScale, setTitleFontScale] = useState(1);
+  const templateRef               = useRef();
+  const measureRef                = useRef();
 
   useEffect(() => {
     getJob(id).then(res => setJob(res.data)).finally(() => setLoading(false));
@@ -25,8 +25,11 @@ export default function JobTemplateGenerator() {
 
   useEffect(() => {
     if (job && imgSize.width && measureRef.current) {
-      const measuredWidth = measureRef.current.offsetWidth;
-      setTitleLong(measuredWidth > imgSize.width * 0.75);
+      const previewScale   = Math.min(1, 240 / imgSize.width);
+      const dW             = Math.round(imgSize.width * previewScale);
+      const availableWidth = dW * 0.73;                       // ~73% of preview width
+      const measuredWidth  = measureRef.current.offsetWidth;  // title at base font size
+      setTitleFontScale(Math.min(1, availableWidth / measuredWidth));
     }
   }, [job, imgSize]);
 
@@ -79,16 +82,12 @@ export default function JobTemplateGenerator() {
     : [];
 
   const PREVIEW_MAX_WIDTH = 240;
-  const scale = Math.min(1, PREVIEW_MAX_WIDTH / imgSize.width);
+  const scale  = Math.min(1, PREVIEW_MAX_WIDTH / imgSize.width);
   const displayW = Math.round(imgSize.width  * scale);
   const displayH = Math.round(imgSize.height * scale);
   const fs = (px) => `${Math.round(px * scale)}px`;
 
-  const titleWords = job.title.split(' ');
-  const firstWord = titleWords[0];
-  const restWords = titleWords.slice(1).join(' ');
-
-  // Gradient text helper style
+  // Gradient text helper styles
   const gradientTitle = {
     background: 'linear-gradient(135deg, #1B3D2F 0%, #2d6649 40%, #C9A53A 100%)',
     WebkitBackgroundClip: 'text',
@@ -119,7 +118,8 @@ export default function JobTemplateGenerator() {
           lineHeight: 0,
         }}
       >
-        {/* Hidden measuring element */}
+        {/* Hidden measuring element — renders title at the base font size so we
+            can calculate how much we need to shrink it to fit one line */}
         <div
           ref={measureRef}
           style={{
@@ -170,58 +170,37 @@ export default function JobTemplateGenerator() {
           <div
             style={{
               position: 'absolute',
-              top: '30%', /* ⬅️ ADJUST THIS — was 29%, increase to move down, decrease to move up */
+              top: '30%',
               left: '2%',
               zIndex: 1,
             }}
           >
-            {/* JOB TITLE */}
-            {titleLong ? (
-              <div>
-                <h1
-                  style={{
-                    ...gradientTitle,
-                    fontSize: fs(85),
-                    fontWeight: '900',
-                    textTransform: 'uppercase',
-                    margin: `0 0 ${fs(5)} 0`,
-                    lineHeight: 1.1,
-                    letterSpacing: '1px',
-                  }}
-                >
-                  {firstWord}
-                </h1>
-                {restWords && (
-                  <h1
-                    style={{
-                      ...gradientTitle,
-                      fontSize: fs(85),
-                      fontWeight: '900',
-                      textTransform: 'uppercase',
-                      margin: 0,
-                      lineHeight: 1.1,
-                      letterSpacing: '1px',
-                    }}
-                  >
-                    {restWords}
-                  </h1>
-                )}
-              </div>
-            ) : (
+            {/* JOB TITLE
+                Fixed-height flex container keeps the title vertically centred
+                regardless of how small the font gets. Font shrinks via
+                titleFontScale so the text always stays on one line. */}
+            <div
+              style={{
+                height: fs(200),
+                display: 'flex',
+                alignItems: 'center',
+              }}
+            >
               <h1
                 style={{
                   ...gradientTitle,
-                  fontSize: fs(85),
+                  fontSize: `${Math.round(85 * titleFontScale * scale)}px`,
                   fontWeight: '900',
                   textTransform: 'uppercase',
-                  margin: `0 0 ${fs(10)} 0`,
+                  margin: 0,
                   lineHeight: 1.1,
                   letterSpacing: '1px',
+                  whiteSpace: 'nowrap',
                 }}
               >
                 {job.title}
               </h1>
-            )}
+            </div>
 
             {/* KEY REQUIREMENTS SECTION */}
             {keyRequirements.length > 0 && (
@@ -317,7 +296,7 @@ export default function JobTemplateGenerator() {
       </div>
 
       <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
-        <button onClick={handleSave} style={styles.btn}>💾 Save</button>
+        <button onClick={handleSave}  style={styles.btn}>💾 Save</button>
         <button onClick={handleShare} style={styles.btn}>↗ Share</button>
         <button onClick={handleCopy} style={styles.btn}>📋 Copy</button>
       </div>

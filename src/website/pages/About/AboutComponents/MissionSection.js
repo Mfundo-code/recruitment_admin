@@ -20,13 +20,11 @@ const MissionSection = () => {
             Aligning the Right Talent with The Right Opportunities
           </h2>
           <p className="mission-paragraph">
-            Our mission is clear: to align the right talent with the right
+            Our mission is to align the right talent with the right
             opportunities. We go beyond matching resumes to job descriptions,
             we focus on finding candidates who possess not only the required
             skills but also the cultural fit that drives long‑term success. With
-            deep expertise in Engineering, Construction, Mining, FMCG,
-            Architecture, Supply Chain, and Logistics, we build partnerships
-            that create lasting value.
+            deep expertise we build partnerships that create lasting value.
           </p>
         </div>
         <div className="mission-image-container">

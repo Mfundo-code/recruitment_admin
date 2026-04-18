@@ -25,7 +25,7 @@ const AboutCTA = () => {
         <h2 style={styles.title}>Ready to Transform Your Recruitment Strategy?</h2>
         <p style={styles.subtitle}>
           Whether you're scaling your team, searching for transformational leadership,
-          or navigating urgent staffing needs — we deliver tailored talent solutions
+          or navigating urgent staffing needs, we deliver tailored talent solutions
           for Engineering, Construction, Mining, FMCG, Architecture, Supply Chain,
           and Logistics. Let's build a partnership that powers your success.
         </p>

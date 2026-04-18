@@ -25,7 +25,7 @@ const AdvertisingSection = () => {
             With deep expertise in Engineering, Construction, Mining, FMCG,
             Architecture, Supply Chain, and Logistics, we go beyond matching
             resumes to job descriptions. We focus on cultural fit and long‑term
-            success — delivering recruitment solutions that create lasting value.
+            success delivering recruitment solutions that create lasting value.
           </p>
         </div>
 
