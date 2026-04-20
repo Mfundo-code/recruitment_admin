@@ -232,7 +232,7 @@ export default function JobTemplateGenerator() {
                 {/* Requirements list – custom diamond bullets */}
                 <ul
                   style={{
-                    margin: `${fs(60)} 0 0 ${fs(120)}`,
+                    margin: `${fs(60)} 0 0 ${fs(50)}`,
                     paddingLeft: 0,
                     listStyle: 'none',
                     color: '#1B3D2F',
