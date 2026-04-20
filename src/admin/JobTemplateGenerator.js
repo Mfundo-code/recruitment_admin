@@ -104,16 +104,10 @@ export default function JobTemplateGenerator() {
     filter: 'drop-shadow(0px 1px 3px rgba(201,165,58,0.3))',
   };
 
-  // Stacked drop-shadows simulate a thick white outline around gradient text.
-  // (text-shadow has no effect when WebkitTextFillColor is transparent, so
-  //  drop-shadow on the element itself is the correct approach.)
   const whiteOutlineFilter = [
-    'drop-shadow(0px  0px  8px rgba(255,255,255,1))',
-    'drop-shadow(0px  0px  5px rgba(255,255,255,1))',
-    'drop-shadow( 3px  0px  4px rgba(255,255,255,1))',
-    'drop-shadow(-3px  0px  4px rgba(255,255,255,1))',
-    'drop-shadow( 0px  3px  4px rgba(255,255,255,1))',
-    'drop-shadow( 0px -3px  4px rgba(255,255,255,1))',
+    'drop-shadow(0px 0px 4px rgba(255,255,255,1))',
+    'drop-shadow(0px 0px 6px rgba(255,255,255,0.9))',
+    'drop-shadow(0px 2px 3px rgba(255,255,255,0.8))',
   ].join(' ');
 
   return (
