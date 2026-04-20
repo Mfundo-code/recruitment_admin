@@ -104,6 +104,18 @@ export default function JobTemplateGenerator() {
     filter: 'drop-shadow(0px 1px 3px rgba(201,165,58,0.3))',
   };
 
+  // Stacked drop-shadows simulate a thick white outline around gradient text.
+  // (text-shadow has no effect when WebkitTextFillColor is transparent, so
+  //  drop-shadow on the element itself is the correct approach.)
+  const whiteOutlineFilter = [
+    'drop-shadow(0px  0px  8px rgba(255,255,255,1))',
+    'drop-shadow(0px  0px  5px rgba(255,255,255,1))',
+    'drop-shadow( 3px  0px  4px rgba(255,255,255,1))',
+    'drop-shadow(-3px  0px  4px rgba(255,255,255,1))',
+    'drop-shadow( 0px  3px  4px rgba(255,255,255,1))',
+    'drop-shadow( 0px -3px  4px rgba(255,255,255,1))',
+  ].join(' ');
+
   return (
     <div>
       <h2 style={{ color: '#1B3D2F', marginBottom: '20px' }}>Social Media Template</h2>
@@ -118,8 +130,7 @@ export default function JobTemplateGenerator() {
           lineHeight: 0,
         }}
       >
-        {/* Hidden measuring element — renders title at the base font size so we
-            can calculate how much we need to shrink it to fit one line */}
+        {/* Hidden measuring element */}
         <div
           ref={measureRef}
           style={{
@@ -175,10 +186,7 @@ export default function JobTemplateGenerator() {
               zIndex: 1,
             }}
           >
-            {/* JOB TITLE
-                Fixed-height flex container keeps the title vertically centred
-                regardless of how small the font gets. Font shrinks via
-                titleFontScale so the text always stays on one line. */}
+            {/* JOB TITLE */}
             <div
               style={{
                 height: fs(150),
@@ -205,7 +213,7 @@ export default function JobTemplateGenerator() {
             {/* KEY REQUIREMENTS SECTION */}
             {keyRequirements.length > 0 && (
               <>
-                {/* Subheading with gold gradient + underline accent */}
+                {/* Subheading */}
                 <div style={{ position: 'relative', display: 'inline-block', margin: `${fs(48)} 0 0 0` }}>
                   <h2
                     style={{
@@ -229,10 +237,10 @@ export default function JobTemplateGenerator() {
                   }} />
                 </div>
 
-                {/* Requirements list – custom diamond bullets */}
+                {/* Requirements list */}
                 <ul
                   style={{
-                    margin: `${fs(60)} 0 0 ${fs(50)}`,
+                    margin: `${fs(60)} 0 0 ${fs(20)}`,
                     paddingLeft: 0,
                     listStyle: 'none',
                     color: '#1B3D2F',
@@ -261,7 +269,7 @@ export default function JobTemplateGenerator() {
                         WebkitBackgroundClip: 'text',
                         WebkitTextFillColor: 'transparent',
                         backgroundClip: 'text',
-                        filter: 'drop-shadow(0px 1px 2px rgba(255,255,255,0.8))',
+                        filter: whiteOutlineFilter,
                       }}>
                         {req}
                       </span>
